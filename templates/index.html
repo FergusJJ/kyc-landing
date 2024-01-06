@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>HTMX & Go - Dark Theme Demo</title>
+  <link href="static/styles/dark-theme.css" rel="stylesheet">
+  <script src="https://unpkg.com/htmx.org@1.9.5"
+    integrity="sha384-xcuj3WpfgjlKF+FXhSQFQ0ZNr39ln+hwjN3npfM9VBnUskLolQAcN80McRIVOPuO"
+    crossorigin="anonymous"></script>
+  <script src="static/scripts/scripts.js" defer></script>
+</head>
+
+<body>
+  <header class="header">
+    <h1>ID Verification</h1>
+  </header>
+  <main class="main-content">
+    <section class="document-selection">
+      <h2>Select Document Type</h2>
+      <ul class="document-list">
+        {{range .VerificationDocuments}}
+        <li class="list-group-item list-group-item-action list-group-item" onclick="selectItem(this)">{{.}}</li>
+        {{end}}
+      </ul>
+    </section>
+    <section class="upload-form">
+      <form id="upload-form" hx-encoding='multipart/form-data' hx-post='/upload-document'>
+        <input type="hidden" id="selectedDocument" name="documentType">
+        <div class="file-upload">
+          <input type="file" id="documentImage" name='documentImage' class="file-upload-label"
+            onchange="showThumbnail(this)">
+        </div>
+        <button type="submit" class="submit-button">Upload</button>
+      </form>
+      <img id="thumbnail" class="thumbnail" style="display:none;">
+    </section>
+  </main>
+</body>
+
+</html>
